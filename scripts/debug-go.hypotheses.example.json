@@ -1,0 +1,62 @@
+[
+  {
+    "id": "H1",
+    "origin": "primary",
+    "axis": "data",
+    "claim": "Input fixture is malformed and fails validation",
+    "exp": "test",
+    "cost": "low",
+    "command": "pnpm -s test --filter=libretto -- test/input-validation.spec.ts",
+    "killIf": "exit0"
+  },
+  {
+    "id": "H2",
+    "origin": "primary",
+    "axis": "control-flow",
+    "claim": "New branch bypasses selector wait path",
+    "exp": "probe",
+    "cost": "medium",
+    "command": "pnpm -s test --filter=libretto -- test/workflow-branching.spec.ts",
+    "killIf": "exit0"
+  },
+  {
+    "id": "H3",
+    "origin": "primary",
+    "axis": "config",
+    "claim": "Runtime config missing expected env value",
+    "exp": "assertion",
+    "cost": "low",
+    "command": "pnpm -s test --filter=libretto -- test/config-load.spec.ts",
+    "killIf": "exit0"
+  },
+  {
+    "id": "H4",
+    "origin": "primary",
+    "axis": "deps",
+    "claim": "Dependency upgrade changed selector semantics",
+    "exp": "probe",
+    "cost": "high",
+    "command": "pnpm -s test --filter=libretto -- test/selector-compat.spec.ts",
+    "killIf": "exit0"
+  },
+  {
+    "id": "H5",
+    "origin": "adversarial",
+    "axis": "env",
+    "claim": "CI-only timing race does not reproduce locally",
+    "exp": "test",
+    "cost": "medium",
+    "command": "CI=1 pnpm -s test --filter=libretto -- test/timing.spec.ts",
+    "killIf": "exit0"
+  },
+  {
+    "id": "H6",
+    "origin": "adversarial",
+    "axis": "contract",
+    "claim": "External API response contract changed",
+    "exp": "assertion",
+    "cost": "medium",
+    "command": "pnpm -s test --filter=libretto -- test/network-contract.spec.ts",
+    "killIf": "exit0"
+  }
+]
