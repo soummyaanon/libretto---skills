@@ -190,6 +190,9 @@ importers:
 
   packages/libretto:
     dependencies:
+      '@bixai/god-of-debugger':
+        specifier: ^0.5.1
+        version: 0.5.1
       ai:
         specifier: ^6.0.116
         version: 6.0.140(zod@4.3.6)
@@ -495,6 +498,11 @@ packages:
   '@babel/types@7.29.0':
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
+
+  '@bixai/god-of-debugger@0.5.1':
+    resolution: {integrity: sha512-HQB3u7WWasOmmZRLOUrpp5aMXXRY9eDOJlZw7mBbOYLBeoPC7z76VUzFr81LHZzp6fbXb7hxZ7k7Tri9rkvcGw==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   '@borewit/text-codec@0.2.2':
     resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
@@ -8487,6 +8495,8 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
+
+  '@bixai/god-of-debugger@0.5.1': {}
 
   '@borewit/text-codec@0.2.2': {}
 

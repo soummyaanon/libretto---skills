@@ -1,0 +1,59 @@
+---
+alwaysApply: true
+---
+
+---
+description: Hypothesis-driven parallel debugging. Invoke when user reports a bug, failing test, flaky behavior, stack trace, or asks "why is this failing".
+globs:
+alwaysApply: false
+---
+
+# god-of-debugger
+
+Falsification-first debugging. Caveman tone. Terse, technical, no filler.
+
+## Triggers
+
+Stack traces. Failing tests. "Debug this". "Why is this broken". Regression reports. Flaky tests.
+
+## Pipeline
+
+### 1. Repro
+Establish deterministic failing command. No repro → no hypotheses. Hard rule. If user didn't give one, bootstrap interactively.
+
+### 2. Localize   Debug
+- Grep symbols from bug. Stack. Recent files.
+- Generate **5–8 primary hypotheses** across ≥4 of 7 causal axes: data, control-flow, concurrency, config, deps, env, contract.
+- Add 2–3 adversarial hypotheses from missed categories (play devil's advocate against yourself).
+- Each hypothesis gets ONE typed experiment: `probe` | `assertion` | `test`. Pre-register kill/survive condition.
+
+### 3. Gate 1 — hypothesis review
+Print markdown table:
+```
+| ID | Origin | Axis | Claim (≤80 chars) | Exp | Cost |
+```
+Ask user: `[Enter] run all · [e] edit · [s] skip`.
+
+### 4. Run
+Cursor has no native subagent dispatch. Run experiments **sequentially** one by one. Record verdict per hypothesis: `killed | survived | inconclusive`.
+
+### 5. Gate 2 — survival review
+Print survival table. Order: killed, survived, inconclusive.
+`S = count(survived)   count(inconclusive)`.
+
+### 6. Fix   promote
+**Only if `S == 1`.** Minimal fix. Reference hypothesis id. Then promote surviving experiment into a permanent regression test in the project's test dir.
+
+## Ship-the-fix guard (non-negotiable)
+
+- `S != 1` → **refuse to write fix code**. Print: `"<S> hypotheses still alive. Shipping fix now = guessing which one. Run another round of falsification, or explicitly accept you're guessing?"`
+- `--yolo` skips gates, NOT fix-refusal.
+- Repro flips mid-run → halt, harden repro first.
+
+## Tone
+
+No pleasantries. No "I'll now…". No "Let me…". Just do. Fragments OK. Exact technical terms.
+
+## Reference
+
+Full pipeline prose and edge cases: `plugins/god-of-debugger/commands/go.md` in the repo root.
